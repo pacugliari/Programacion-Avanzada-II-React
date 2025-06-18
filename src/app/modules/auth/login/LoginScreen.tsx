@@ -1,29 +1,11 @@
-import React, { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { ApiService } from "./api";
-import { useGlobal } from "../../../GlobalContext";
-import { useNavigate } from "react-router-dom";
-import { useSpinner } from "../../../shared/SpinnerContext";
+import useScreenHooks from "./useScreenHooks";
 
 interface LoginScreenProps {}
 
 const LoginScreen: React.FC<LoginScreenProps> = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-  const { login } = useGlobal();
-  const { show } = useSpinner();
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    show();
-    const response = await ApiService.login({ email, password });
-    login(response.payload.token, response.payload.user);
-    navigate("/movies");
-  }
-
-  useEffect(() => {
-    document.title = "Iniciar Sesión";
-  }, []);
+  const { email, password, setEmail, setPassword, handleSubmit } =
+    useScreenHooks();
 
   return (
     <div className="container d-flex align-items-center justify-content-center">

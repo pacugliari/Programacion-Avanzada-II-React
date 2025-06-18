@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import useScreenHooks from "./useScreenHooks";
 
 interface RegisterScreenProps {}
 
 const RegisterScreen: React.FC<RegisterScreenProps> = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = () => {};
-
-  useEffect(() => {
-    document.title = "Registrarse";
-  }, []);
-
+  const {
+    name,
+    email,
+    password,
+    confirmPassword,
+    setName,
+    setEmail,
+    setPassword,
+    setConfirmPassword,
+    handleSubmit,
+  } = useScreenHooks();
+  
   return (
     <div className="container d-flex align-items-center justify-content-center">
       <div className="login-container bg-dark text-white p-4 rounded shadow col-10 col-md-6">
