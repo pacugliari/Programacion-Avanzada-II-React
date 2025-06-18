@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { clearAuth, getToken } from "./auth-storage";
-import { callHideSpinner } from "./SpinnerContext";
+import { callHideSpinner } from "../context/SpinnerContext";
 import type { ApiErrorResponse } from "./types";
 
 const http = axios.create({ baseURL: import.meta.env.VITE_API_URL });

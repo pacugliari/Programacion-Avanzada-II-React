@@ -4,13 +4,13 @@ import type { Movie } from "../shared/types";
 
 const API_ROUTE = import.meta.env.VITE_API_URL;
 
-export type GetMoviesResponse = ApiResponse<Movie[]>;
+export type GetMovieByIdResponse = ApiResponse<Movie>;
 
-const getMovies = async (): Promise<GetMoviesResponse> => {
-  const response = await http.get(`${API_ROUTE}/movies`);
+const getMovieById = async (id: number): Promise<GetMovieByIdResponse> => {
+  const response = await http.get(`${API_ROUTE}/movies/${id}`);
   return response.data;
 };
 
 export const ApiService = {
-  getMovies,
+  getMovieById,
 };

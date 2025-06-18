@@ -1,14 +1,14 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { useGlobal } from "../GlobalContext";
+import { useGlobal } from "../context/GlobalContext";
 
 export default function Layout() {
   const { user, logout } = useGlobal();
   const navigate = useNavigate();
-  
+
   const handleLogout = (e: React.FormEvent) => {
     e.preventDefault();
     logout();
-    navigate("/login"); // Ahora sí, en contexto de Router
+    navigate("/login");
   };
 
   return (

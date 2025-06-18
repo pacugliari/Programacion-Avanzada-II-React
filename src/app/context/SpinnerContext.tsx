@@ -22,7 +22,7 @@ export function SpinnerProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
 
   const show = (title = "Cargando...") => {
-    if (isLoading) return; // Evitar múltiples modales
+    if (isLoading) return;
     setIsLoading(true);
     Swal.fire({
       title,

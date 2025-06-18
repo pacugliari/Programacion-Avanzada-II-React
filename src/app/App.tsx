@@ -1,6 +1,6 @@
-import { GlobalProvider } from "./GlobalContext";
+import { GlobalProvider } from "./context/GlobalContext";
 import Router from "./Router";
-import { SpinnerProvider } from "./shared/SpinnerContext";
+import { SpinnerProvider } from "./context/SpinnerContext";
 
 function App() {
   const apiUrl = import.meta.env.VITE_API_URL;

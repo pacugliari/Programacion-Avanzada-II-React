@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useGlobal } from "../../../GlobalContext";
-import { ApiService } from "./api";
-import type { Movie } from "./types";
-import { useSpinner } from "../../../shared/SpinnerContext";
+import React from "react";
+import useScreenHooks from "./useScreenHooks";
+import "./styles.css";
 
 export const IndexScreen: React.FC = () => {
-  const { user } = useGlobal();
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const { show, hide, isLoading } = useSpinner();
-
-  const loadData = async () => {
-    if (!isLoading) show();
-
-    const response = await ApiService.getMovies();
-    setMovies(response.payload);
-    hide();
-  };
-  useEffect(() => {
-    loadData();
-  }, []);
+  const {
+    movies,
+    isLoading,
+    user,
+    errors,
+    selectedMovieId,
+    isBlocked,
+    handleCardClick,
+    isSelected,
+    handleDoubleClick,
+    handleModify,
+    handleBlock,
+    handleDelete,
+    handleCreate,
+  } = useScreenHooks();
 
   return (
     <>
-      {!isLoading && (
-        <div className="flex-column bg-white card p-2">
+      {!isLoading && !errors && (
+        <div className="flex-column bg-white card p-2 top-0 col-12 col-md-12">
           <div
             className="mb-4 p-2 sticky-top bg-white"
             style={{ zIndex: 1000 }}
@@ -38,15 +37,21 @@ export const IndexScreen: React.FC = () => {
                     <button
                       id="btnBlock"
                       className="btn btn-primary d-flex align-items-center"
-                      disabled
+                      onClick={handleBlock}
+                      disabled={!selectedMovieId}
                     >
-                      <span className="material-icons me-1">lock</span>
-                      <span className="d-none d-md-inline">Bloquear</span>
+                      <span className="material-icons me-1">
+                        {isBlocked ? "lock_open" : "lock"}
+                      </span>
+                      <span className="d-none d-md-inline">
+                        {isBlocked ? "Desbloquear" : "Bloquear"}
+                      </span>
                     </button>
                   )}
                   <button
                     id="btnCreate"
                     className="btn btn-success d-flex align-items-center"
+                    onClick={handleCreate}
                   >
                     <span className="material-icons me-1">add</span>
                     <span className="d-none d-md-inline">Crear</span>
@@ -54,7 +59,8 @@ export const IndexScreen: React.FC = () => {
                   <button
                     id="btnModify"
                     className="btn btn-warning d-flex align-items-center"
-                    disabled
+                    onClick={handleModify}
+                    disabled={!selectedMovieId}
                   >
                     <span className="material-icons me-1">edit</span>
                     <span className="d-none d-md-inline">Modificar</span>
@@ -62,7 +68,8 @@ export const IndexScreen: React.FC = () => {
                   <button
                     id="btnDelete"
                     className="btn btn-danger d-flex align-items-center"
-                    disabled
+                    onClick={handleDelete}
+                    disabled={!selectedMovieId}
                   >
                     <span className="material-icons me-1">delete</span>
                     <span className="d-none d-md-inline">Eliminar</span>
@@ -73,15 +80,25 @@ export const IndexScreen: React.FC = () => {
           </div>
 
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 me-2 ms-2">
-            {movies.map((movie) => (
-              <div className="col" key={movie.id}>
-                <div
-                  className="card h-100 shadow-sm movie-card"
-                  data-movie-id={movie.id}
-                  data-blocked={movie.blocked ? 1 : 0}
-                >
-                  {/* Enlace a detalle si usás react-router, reemplazá por <Link> */}
-                  <span>
+            {movies.length === 0 ? (
+              <div className="col-12 text-center mt-4 w-100">
+                <p className="text-muted fs-5">No hay películas disponibles.</p>
+              </div>
+            ) : (
+              movies.map((movie) => (
+                <div className="col" key={movie.id}>
+                  <div
+                    className={`card h-100 shadow-sm movie-card ${
+                      isSelected(movie.id) ? "selected-card" : ""
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleCardClick(movie.id);
+                    }}
+                    onDoubleClick={() => handleDoubleClick(movie.id)}
+                    data-movie-id={movie.id}
+                    data-blocked={movie.blocked ? 1 : 0}
+                  >
                     <div
                       className="card-img-container"
                       style={{ height: 300, overflow: "hidden" }}
@@ -97,23 +114,23 @@ export const IndexScreen: React.FC = () => {
                         }}
                       />
                     </div>
-                  </span>
-                  <div className="card-body">
-                    <h5 className="card-title text-center d-flex justify-content-center align-items-center gap-2">
-                      <span className="text-dark">{movie.titulo}</span>
-                      {movie.blocked ? (
-                        <span
-                          className="material-icons text-danger"
-                          title="Película bloqueada"
-                        >
-                          lock
-                        </span>
-                      ) : null}
-                    </h5>
+                    <div className="card-body">
+                      <h5 className="card-title text-center d-flex justify-content-center align-items-center gap-2">
+                        <span className="text-dark">{movie.titulo}</span>
+                        {movie.blocked && (
+                          <span
+                            className="material-icons text-danger"
+                            title="Película bloqueada"
+                          >
+                            lock
+                          </span>
+                        )}
+                      </h5>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       )}
