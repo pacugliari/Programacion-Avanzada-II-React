@@ -1,7 +1,7 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { ApiService } from "./api";
-import { useGlobal } from "../../../GlobalContext";
-import { useSpinner } from "../../../shared/SpinnerContext";
+import { useGlobal } from "../../../context/GlobalContext";
+import { useSpinner } from "../../../context/SpinnerContext";
 import { useNavigate } from "react-router-dom";
 
 export default function useScreenHooks() {

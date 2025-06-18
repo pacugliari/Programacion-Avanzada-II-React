@@ -26,7 +26,3 @@ export interface Movie {
   reparto: Actor[];
   trailer: string;
 }
-
-export interface GetMoviesResponse {
-  payload: Movie[];
-}

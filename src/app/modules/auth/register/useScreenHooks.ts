@@ -1,6 +1,6 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { ApiService } from "./api";
-import { useSpinner } from "../../../shared/SpinnerContext";
+import { useSpinner } from "../../../context/SpinnerContext";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 

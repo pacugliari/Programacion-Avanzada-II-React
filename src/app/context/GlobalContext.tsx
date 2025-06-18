@@ -10,7 +10,7 @@ import {
   loadAuth,
   saveAuth,
   clearAuth,
-} from "./shared/auth-storage";
+} from "../shared/auth-storage";
 
 type GlobalContextType = {
   token: string | null;
