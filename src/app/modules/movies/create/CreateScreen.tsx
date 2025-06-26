@@ -14,7 +14,7 @@ export const CreateScreen: React.FC = () => {
     categoryId,
     categories,
     categoria,
-    temporadas,
+    cantidadTemporadas,
     trailer,
     genres,
     selectedGenres,
@@ -25,7 +25,7 @@ export const CreateScreen: React.FC = () => {
     setSummary,
     setCategoryId,
     setCategoria,
-    setTemporadas,
+    setCantidadTemporadas,
     setTrailer,
     setSelectedGenres,
     setSelectedActors,
@@ -135,7 +135,7 @@ export const CreateScreen: React.FC = () => {
                   setCategoria(
                     e.target.options[
                       e.target.selectedIndex
-                    ].text.toLowerCase() as CategoryType
+                    ].text as CategoryType
                   );
                 }}
               >
@@ -159,10 +159,10 @@ export const CreateScreen: React.FC = () => {
                 id="cantidadTemporadas"
                 name="cantidadTemporadas"
                 min={1}
-                value={temporadas}
-                onChange={(e) => setTemporadas(Number(e.target.value))}
-                required={categoria === "serie"}
-                disabled={categoria !== "serie"}
+                value={cantidadTemporadas}
+                onChange={(e) => setCantidadTemporadas(Number(e.target.value))}
+                required={categoria === CategoryType.SERIE}
+                disabled={categoria !== CategoryType.SERIE}
               />
               <div className="invalid-feedback">Este campo es requerido</div>
             </div>

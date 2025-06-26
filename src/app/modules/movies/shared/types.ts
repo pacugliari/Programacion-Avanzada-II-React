@@ -14,8 +14,8 @@ export interface Actor {
 }
 
 export enum CategoryType {
-  SERIE = "serie",
-  PELICULA = "pelicula",
+  SERIE = "Serie",
+  PELICULA = "Película",
 }
 
 export interface Movie {

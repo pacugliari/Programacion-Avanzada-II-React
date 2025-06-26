@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSpinner } from "../../../context/SpinnerContext";
 import type { ApiErrorResponse } from "../../../shared/types";
 import type { Movie } from "../shared/types";
-import { ApiService } from "./api";
+import { SharedApiService } from "../shared/api";
 
 export default function useScreenHooks() {
   const [movie, setMovie] = useState<Movie | null>(null);
@@ -21,7 +21,7 @@ export default function useScreenHooks() {
       try {
         if (!isLoading) show();
 
-        const response = await ApiService.getMovieById(Number(id));
+        const response = await SharedApiService.getMovieById(Number(id));
         setMovie(response.payload);
         hide();
       } catch (error) {
