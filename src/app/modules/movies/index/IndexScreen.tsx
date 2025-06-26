@@ -97,7 +97,7 @@ export const IndexScreen: React.FC = () => {
                     }}
                     onDoubleClick={() => handleDoubleClick(movie.id)}
                     data-movie-id={movie.id}
-                    data-blocked={movie.blocked ? 1 : 0}
+                    data-blocked={movie.blocked}
                   >
                     <div
                       className="card-img-container"
@@ -117,7 +117,7 @@ export const IndexScreen: React.FC = () => {
                     <div className="card-body">
                       <h5 className="card-title text-center d-flex justify-content-center align-items-center gap-2">
                         <span className="text-dark">{movie.titulo}</span>
-                        {movie.blocked && (
+                        {!!movie.blocked && (
                           <span
                             className="material-icons text-danger"
                             title="Película bloqueada"

@@ -1,6 +1,7 @@
 import { GlobalProvider } from "./context/GlobalContext";
-import Router from "./Router";
 import { SpinnerProvider } from "./context/SpinnerContext";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "./Router";
 
 function App() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -9,7 +10,9 @@ function App() {
   return (
     <GlobalProvider>
       <SpinnerProvider>
-        <Router />
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
       </SpinnerProvider>
     </GlobalProvider>
   );

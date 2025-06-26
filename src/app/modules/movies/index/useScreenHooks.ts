@@ -2,35 +2,37 @@ import { useState, useEffect } from "react";
 import { ApiService } from "./api";
 import { useSpinner } from "../../../context/SpinnerContext";
 import { useGlobal } from "../../../context/GlobalContext";
-import type { ApiErrorResponse } from "../../../shared/types";
+import type { ApiError } from "../../../shared/types";
 import { useNavigate } from "react-router-dom";
 import type { Movie } from "../shared/types";
 import Swal from "sweetalert2";
+import { AlertService } from "../../../shared/alert";
 
 export default function useScreenHooks() {
   const { user } = useGlobal();
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [errors, setErrors] = useState<ApiErrorResponse | null>(null);
+  const [errors, setErrors] = useState<ApiError[] | null>(null);
   const { show, hide, isLoading } = useSpinner();
   const navigate = useNavigate();
   const [selectedMovieId, setSelectedMovieId] = useState<number | null>(null);
 
   useEffect(() => {
     document.title = "Lista de Películas";
-    const fetchMovies = async () => {
-      try {
-        if (!isLoading) show();
-
-        const response = await ApiService.getMovies();
-        setMovies(response.payload);
-        hide();
-      } catch (error) {
-        setErrors(error as ApiErrorResponse);
-      }
-    };
 
     fetchMovies();
   }, []);
+
+  const fetchMovies = async () => {
+    try {
+      if (!isLoading) show();
+
+      const response = await ApiService.getMovies();
+      setMovies(response.payload);
+      hide();
+    } catch (error) {
+      setErrors(error as ApiError[]);
+    }
+  };
 
   const handleCardClick = (movieId: number) => {
     setSelectedMovieId(movieId);
@@ -50,9 +52,17 @@ export default function useScreenHooks() {
     navigate(`/movies/edit/${selectedMovieId}`);
   };
 
-  const handleBlock = () => {
+  const handleBlock = async () => {
     if (!selectedMovieId) return;
-    navigate(`/movies/block/${selectedMovieId}`);
+    try {
+      if (!isLoading) show();
+
+      const response = await ApiService.blockMovie(selectedMovieId);
+      await AlertService.showSuccess(response.message);
+      await fetchMovies();
+    } catch (errorResponse) {
+      await AlertService.showError(errorResponse as ApiError[]);
+    }
   };
 
   const handleDelete = () => {
@@ -65,9 +75,17 @@ export default function useScreenHooks() {
       showCancelButton: true,
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        navigate(`/movies/delete/${selectedMovieId}`);
+        try {
+          if (!isLoading) show();
+
+          const response = await ApiService.deleteMovie(selectedMovieId);
+          await AlertService.showSuccess(response.message);
+          await fetchMovies();
+        } catch (errorResponse) {
+          await AlertService.showError(errorResponse as ApiError[]);
+        }
       }
     });
   };
