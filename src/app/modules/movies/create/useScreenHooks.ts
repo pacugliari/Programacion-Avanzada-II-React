@@ -20,7 +20,7 @@ export default function useScreenHooks() {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [categoryId, setCategoryId] = useState<number | "">("");
-  const [temporadas, setTemporadas] = useState<number | "">("");
+  const [cantidadTemporadas, setCantidadTemporadas] = useState<number | "N/A">("N/A");
   const [trailer, setTrailer] = useState("N/A");
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [selectedActors, setSelectedActors] = useState<number[]>([]);
@@ -46,6 +46,7 @@ export default function useScreenHooks() {
         genres: selectedGenres,
         actors: selectedActors,
         trailer,
+        cantidadTemporadas,
         poster: posterFile as File,
       });
       const alertResponse = await AlertService.showSuccess(response.message);
@@ -90,7 +91,7 @@ export default function useScreenHooks() {
     categoryId,
     categories,
     categoria,
-    temporadas,
+    cantidadTemporadas,
     trailer,
     genres,
     selectedGenres,
@@ -101,7 +102,7 @@ export default function useScreenHooks() {
     setSummary,
     setCategoryId,
     setCategoria,
-    setTemporadas,
+    setCantidadTemporadas,
     setTrailer,
     setSelectedGenres,
     setSelectedActors,

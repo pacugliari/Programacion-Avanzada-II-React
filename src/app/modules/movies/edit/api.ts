@@ -4,27 +4,28 @@ import type { Movie } from "../shared/types";
 
 const API_ROUTE = import.meta.env.VITE_API_URL;
 
-interface CreateMovieRequest {
+interface UpdateMovieRequest {
   title: string;
   category_id: number[];
   summary: string;
   genres: number[];
   actors: number[];
-  cantidadTemporadas: number | 'N/A';
   trailer: string;
-  poster: File;
+  cantidadTemporadas: number | 'N/A';
+  poster: File | undefined;
 }
-export type CreateMovieResponse = ApiResponse<Movie | null>;
+export type UpdateMovieResponse = ApiResponse<Movie | null>;
 
-const createMovie = async (
-  data: CreateMovieRequest
-): Promise<CreateMovieResponse> => {
-  const response = await http.post(`${API_ROUTE}/movies`, data, {
+const updateMovie = async (
+  id: number,
+  data: UpdateMovieRequest
+): Promise<UpdateMovieResponse> => {
+  const response = await http.put(`${API_ROUTE}/movies/${id}`, data, {
     headers: ContentTypes.formData,
   });
   return response.data;
 };
 
 export const ApiService = {
-  createMovie,
+  updateMovie,
 };
