@@ -1,16 +1,21 @@
-interface Genero {
-  id: number;
+export interface Genre {
+  idGenero: number;
   descripcion: string;
 }
 
-interface Categoria {
-  id: number;
-  descripcion: string;
+export interface Category {
+  idCategoria: number;
+  descripcion: CategoryType;
 }
 
-interface Actor {
-  id: number;
+export interface Actor {
+  idActor: number;
   nombre: string;
+}
+
+export enum CategoryType {
+  SERIE = "serie",
+  PELICULA = "pelicula",
 }
 
 export interface Movie {
@@ -19,10 +24,10 @@ export interface Movie {
   poster_id: string;
   titulo: string;
   blocked: number;
-  categoria: Categoria[];
+  categoria: Category[];
   resumen: string;
   temporadas: string;
-  generos: Genero[];
+  generos: Genre[];
   reparto: Actor[];
   trailer: string;
 }
