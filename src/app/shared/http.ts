@@ -4,7 +4,6 @@ import { callHideSpinner } from "../context/SpinnerContext";
 import {
   HttpStatus,
   type ApiErrorResponse,
-  type HttpStatusCode,
 } from "./types";
 import { AlertService } from "./alert";
 
@@ -34,7 +33,7 @@ http.interceptors.response.use(
 
     if (axiosError.response) {
       await handleApiError(
-        axiosError.response.status as HttpStatusCode,
+        axiosError.response.status as HttpStatus,
         axiosError.response.data
       );
     } else {
@@ -47,7 +46,7 @@ http.interceptors.response.use(
   }
 );
 
-async function handleApiError(status: HttpStatusCode, data: ApiErrorResponse) {
+async function handleApiError(status: HttpStatus, data: ApiErrorResponse) {
   if (status === HttpStatus.UNAUTHORIZED) {
     const response = await AlertService.showError(data.errors || []);
     if (response.value) {
