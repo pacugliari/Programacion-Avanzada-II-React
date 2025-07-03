@@ -1,54 +1,121 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🎬 Cliente Web - Programación Avanzada II
 
-Currently, two official plugins are available:
+Este proyecto corresponde al **frontend** del sistema de gestión de películas desarrollado para la materia _Programación Avanzada II_. Se trata de una **aplicación web construida con React + Vite + TypeScript**, diseñada para interactuar con una API RESTful (con autenticación JWT) desarrollada como parte del mismo sistema.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📌 Propósito
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Este cliente permite a los usuarios autenticarse, visualizar películas, crear nuevas, editarlas, ver detalles y más. Toda la lógica de negocio y almacenamiento de datos se delega al backend (API), al cual este frontend se conecta a través de peticiones HTTP.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+## 🚀 Tecnologías Utilizadas
+
+- **React** – Librería principal para la interfaz de usuario.
+- **Vite** – Herramienta de desarrollo rápido para frontend moderno.
+- **TypeScript** – Tipado estático que mejora la escalabilidad y mantenibilidad.
+- **React Router DOM** – Navegación entre pantallas.
+- **Context API** – Manejo de estado global (autenticación y spinner).
+- **Fetch API** – Comunicación con la API backend.
+- **CSS** – Estilos personalizados.
+- **SweetAlert2** – Alertas y confirmaciones visuales.
+
+---
+
+## 🧩 Estructura del Proyecto
+
+```
+src/
+├── app/
+│   ├── context/                # Contextos globales (auth, spinner)
+│   ├── modules/
+│   │   ├── auth/               # Login y registro
+│   │   └── movies/             # CRUD de películas (index, create, edit, detail)
+│   ├── shared/                 # Helpers generales (alertas, storage, auth, http)
+│   ├── App.tsx                 # Definición de rutas
+│   └── Router.tsx             # Router central
+├── assets/                     # Recursos (iconos, imágenes)
+├── main.tsx                    # Punto de entrada de la app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## ⚙️ Instalación
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/pacugliari/Programacion-Avanzada-II-React.git
+cd Programacion-Avanzada-II-React/
 ```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Crear archivo `.env`
+
+Crear un archivo `.env.development` con la siguiente variable:
+
+```env
+VITE_API_URL=http://localhost:3000/api
+VITE_ENV=development
+```
+
+> Asegurate de que coincida con la URL de tu API backend.
+
+---
+
+## ▶️ Ejecución
+
+### Modo desarrollo
+
+```bash
+npm run dev
+```
+
+La aplicación estará disponible en: `http://localhost:5173/`
+
+### Build producción
+
+```bash
+npm run build
+```
+
+### Previsualizar el build
+
+```bash
+npm run preview
+```
+
+---
+
+## 🔐 Autenticación
+
+- Se realiza mediante JWT.
+- Al iniciar sesión, el token se guarda en `localStorage`.
+- Las rutas protegidas verifican su validez antes de permitir el acceso.
+- Al cerrar sesión, el token se elimina del almacenamiento.
+
+---
+
+## ✏️ Funcionalidades
+
+- **Login / Registro de usuarios**
+- **Listado de películas**
+- **Crear nueva película**
+- **Editar una película existente**
+- **Ver detalles de una película**
+- **Manejo de formularios con previsualización de imagen**
+- **Alertas interactivas con SweetAlert2**
+- **Validaciones básicas de formularios**
+
+---
+
+## 📄 Licencia
+
+Este proyecto fue desarrollado con fines académicos para la materia _Programación Avanzada II_. Todos los derechos reservados.
